@@ -7,6 +7,17 @@
 #ifndef UNITY_INTERNALS_H
 #define UNITY_INTERNALS_H
 
+#define UNITY_INCLUDE_EXEC_TIME
+#define UNITY_CLOCK_MS getCurrentTimeMs
+#include <time.h>
+#include <sys/time.h>
+static UNITY_UINT32 getCurrentTimeMs(void) {
+    struct timeval _timeval;
+    gettimeofday(&_timeval, NULL);
+    return (uint64_t)(_timeval.tv_sec * 1000000u) + (uint64_t)_timeval.tv_usec;
+}
+
+
 #ifdef UNITY_INCLUDE_CONFIG_H
 #include "unity_config.h"
 #endif
